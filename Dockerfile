@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 # DOWNLOAD BIND9
-RUN wget -O /tmp/bind-9.9.9-P8.tar.gz ftp://ftp.isc.org/isc/bind/9.9.9-P8/BIND9.9.9-P8.x64.zip && \
+RUN wget -O /tmp/BIND9.9.9-P8.x64.zip ftp://ftp.isc.org/isc/bind/9.9.9-P8/BIND9.9.9-P8.x64.zip && \
    unzip /tmp/BIND9.9.9-P8.x64.zip /tmp
 # COMPILE & MAKE
 RUN /tmp/BIND9.9.9-P8.x64/configure --prefix /data/bind9 --enable-shared \
@@ -26,7 +26,7 @@ RUN /tmp/BIND9.9.9-P8.x64/configure --prefix /data/bind9 --enable-shared \
                        --enable-largefile --with-gnu-ld --enable-ipv6 \
                        CFLAGS=-fno-strict-aliasing CFLAGS=-DDIG_SIGCHASE \
                        CFLAGS=-O2
-RUN make -C /tmp/bind-9.9.9-P8.x64 && make install -C /tmp/bind-9.9.9-P8x64
+RUN make -C /tmp/BIND9.9.9-P8.x64 && make install -C /tmp/BIND9.9.9-P8.x64
 
 #RUN apt-get clean && \
 #      apt-get autoremove --purge -y && \
