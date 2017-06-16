@@ -12,7 +12,8 @@ LABEL build_version="Build-date:- ${BUILD_DATE}"
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	openssl \
 	build-essential \
-	libssl-dev \
+#	libssl-dev \
+	libssl1.0-dev \
 	libdb5.3-dev \
 	wget \
 	gcc \
