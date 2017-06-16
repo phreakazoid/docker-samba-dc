@@ -10,8 +10,7 @@ ARG VERSION
 LABEL build_version="Build-date:- ${BUILD_DATE}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	ca-certificates \
-	curl \
+	wget \
 	gcc \
 	make \
 	&& rm -rf /var/lib/apt/lists/*
