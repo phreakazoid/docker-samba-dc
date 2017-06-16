@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	ca-certificates \
 	curl \
 	gcc \
+	make \
 	&& rm -rf /var/lib/apt/lists/*
 
 # DOWNLOAD BIND9
