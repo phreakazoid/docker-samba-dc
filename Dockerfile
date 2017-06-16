@@ -11,23 +11,23 @@ LABEL build_version="Build-date:- ${BUILD_DATE}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	wget \
-	unzip \
 	gcc \
 	make \
 	&& rm -rf /var/lib/apt/lists/*
 
 # DOWNLOAD BIND9
-RUN wget -O /tmp/BIND9.9.9-P8.x64.zip ftp://ftp.isc.org/isc/bind/9.9.9-P8/BIND9.9.9-P8.x64.zip && \
-    unzip /tmp/BIND9.9.9-P8.x64.zip -d /tmp
+RUN wget -O /tmp/bind-9.9.9-P8.tar.gz ftp://ftp.isc.org/isc/bind/9.9.9-P8/bind-9.9.9-P8.tar.gz && \
+    tar -xvf /tmp/bind-9.9.9-P8.tar.gz -C /tmp
 # COMPILE & MAKE
-RUN /tmp/BIND9.9.9-P8.x64/configure --prefix /data/bind9 --enable-shared \
+RUN /tmp/bind-9.9.9-P8/configure --prefix /data/bind9 --enable-shared \
                        --enable-static --with-openssl=/usr \ 
                        --with-gssapi=/usr/include/gssapi --with-libtool \
                        --with-dlopen=yes --enable-threads \
                        --enable-largefile --with-gnu-ld --enable-ipv6 \
                        CFLAGS=-fno-strict-aliasing CFLAGS=-DDIG_SIGCHASE \
                        CFLAGS=-O2
-RUN make -C /tmp/BIND9.9.9-P8.x64 && make install -C /tmp/BIND9.9.9-P8.x64
+RUN make -C /tmp/bind-9.9.9-P8
+RUN make install -C /tmp/bind-9.9.9-P8
 
 #RUN apt-get clean && \
 #      apt-get autoremove --purge -y && \
