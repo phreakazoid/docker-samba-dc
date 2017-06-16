@@ -11,14 +11,14 @@ LABEL build_version="Build-date:- ${BUILD_DATE}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	wget \
-	gunzip \
+	unzip \
 	gcc \
 	make \
 	&& rm -rf /var/lib/apt/lists/*
 
 # DOWNLOAD BIND9
 RUN wget -O /tmp/BIND9.9.9-P8.x64.zip ftp://ftp.isc.org/isc/bind/9.9.9-P8/BIND9.9.9-P8.x64.zip && \
-    unzip /tmp/BIND9.9.9-P8.x64.zip /tmp
+    unzip /tmp/BIND9.9.9-P8.x64.zip -d /tmp
 # COMPILE & MAKE
 RUN /tmp/BIND9.9.9-P8.x64/configure --prefix /data/bind9 --enable-shared \
                        --enable-static --with-openssl=/usr \ 
