@@ -11,6 +11,7 @@ LABEL build_version="Build-date:- ${BUILD_DATE}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	wget \
+	unzip \
 	gcc \
 	make \
 	&& rm -rf /var/lib/apt/lists/*
