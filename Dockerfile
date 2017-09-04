@@ -8,14 +8,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG BUILD_DATE
 ARG VERSION
 ARG SAMBA-Version=""
-ARG BIND-Version="9.9.9-P8"
+ARG BIND-Version="9.11.2"
 LABEL build_version="Build-date:- ${BUILD_DATE}"
 
 RUN [ "cross-build-start" ]
 
-RUN apt-get update && apt-get install -y wget gcc make build-essential openssl libssl-dev libkrb5-dev
+RUN apt-get update && apt-get install -y wget gcc make libssl1.0-dev libkrb5-dev
 
-# DOWNLOAD BIND9
+# BIND9
+# DOWNLOAD
 RUN wget -O /tmp/bind-9.11.2.tar.gz ftp://ftp.isc.org/isc/bind/9.11.2/bind-9.11.2.tar.gz && \
     tar -xf /tmp/bind-9.11.2.tar.gz -C /tmp
 # COMPILE & MAKE
@@ -28,10 +29,11 @@ RUN /tmp/bind-9.11.2/configure --prefix /usr/local/bind9 --enable-shared \
                        CFLAGS=-O2
 RUN make -C /tmp/bind-9.11.2
 RUN make install -C /tmp/bind-9.11.2
-#RUN make --directory /tmp/bind-9.11.2
-#RUN make install --directory /tmp/bind-9.11.2
+RUN sed 's#^\(export PATH\)$#PATH="/usr/local/bind9/sbin:/usr/local/bind9/bin:$PATH"\n\1#' /etc/profile
+# COPY NAMED.CONF
+COPY /bind/named.conf /usr/local/bind9/etc
 
-#RUN sed 's#^\(export PATH\)$#PATH="/usr/local/bind9/sbin:/usr/local/bind9/bin:$PATH"\n\1#' /etc/profile
+# SAMBA
 
 ### CLEANUP ###
 RUN apt-get purge -y gcc* make* 
@@ -40,7 +42,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN [ "cross-build-end" ]
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
 
 RUN [ "cross-build-end" ]
 
