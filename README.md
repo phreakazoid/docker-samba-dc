@@ -23,3 +23,13 @@ asterisk:
   environment:
     TZ: "Europe/Berlin"
 ```
+
+###  DHCPD
+```
+ -docker run -d \
+ - --restart=always \
+ - --net="host" \
+ - -v /opt/DHCP/data:/etc/dhcp \
+ - --name DHCP \
+ - phreakazoid/rpi-samba-dc:dhcpd
+ ```
