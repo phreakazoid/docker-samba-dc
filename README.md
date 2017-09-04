@@ -24,7 +24,7 @@ asterisk:
     TZ: "Europe/Berlin"
 ```
 
-###  DHCPD
+###  DHCP-Server
 ```
  -docker run -d \
  - --restart=always \
