@@ -16,20 +16,20 @@ RUN [ "cross-build-start" ]
 RUN apt-get update && apt-get install -y wget gcc make build-essential openssl libssl-dev libkrb5-dev
 
 # DOWNLOAD BIND9
-RUN wget -O /tmp/bind-9.9.9-P8.tar.gz ftp://ftp.isc.org/isc/bind/9.9.9-P8/bind-9.9.9-P8.tar.gz && \
-    tar -xvf /tmp/bind-9.9.9-P8.tar.gz -C /tmp
+RUN wget -O /tmp/bind-9.11.2.tar.gz ftp://ftp.isc.org/isc/bind/9.11.2/bind-9.11.2.tar.gz && \
+    tar -xf /tmp/bind-9.11.2.tar.gz -C /tmp
 # COMPILE & MAKE
-RUN /tmp/bind-9.9.9-P8/configure --prefix /usr/local/bind9 --enable-shared \
+RUN /tmp/bind-9.11.2/configure --prefix /usr/local/bind9 --enable-shared \
                        --enable-static --with-openssl=/usr \ 
                        --with-gssapi=/usr/include/gssapi --with-libtool \
                        --with-dlopen=yes --enable-threads \
                        --enable-largefile --with-gnu-ld --enable-ipv6 \
                        CFLAGS=-fno-strict-aliasing CFLAGS=-DDIG_SIGCHASE \
                        CFLAGS=-O2
-RUN make -C /tmp/bind-9.9.9-P8
-RUN make install -C /tmp/bind-9.9.9-P8
-#RUN make --directory /tmp/bind-9.9.9-P8
-#RUN make install --directory /tmp/bind-9.9.9-P8
+RUN make -C /tmp/bind-9.11.2
+RUN make install -C /tmp/bind-9.11.2
+#RUN make --directory /tmp/bind-9.11.2
+#RUN make install --directory /tmp/bind-9.11.2
 
 #RUN sed 's#^\(export PATH\)$#PATH="/usr/local/bind9/sbin:/usr/local/bind9/bin:$PATH"\n\1#' /etc/profile
 
