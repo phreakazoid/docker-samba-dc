@@ -9,17 +9,17 @@ Docker Samba Domain Controller on RPI with BIND9 for DNS
 
 ###  LATEST
 ```
-asterisk:
+samba-ad-dc:
   container_name: DC
   image: phreakazoid/samba-dc:latest
   restart: always
   net: host
   volumes:
     - "/etc/localtime:/etc/localtime:ro"
-    - "/opt/dc-arm/samba:/usr/local/samba/etc"
-    - "/opt/dc-arm/data:/usr/local/samba/private"
-    - "/opt/dc-arm/samba-log:/usr/local/samba/var"
-    - "/opt/dc-arm/bind9:/usr/local/bind9/etc"    
+    - "/opt/ad-dc-arm/samba:/usr/local/samba/etc"
+    - "/opt/ad-dc-arm/data:/usr/local/samba/private"
+    - "/opt/ad-dc-arm/samba-log:/usr/local/samba/var"
+    - "/opt/ad-dc-arm/bind9:/usr/local/bind9/etc"    
   environment:
     TZ: "Europe/Berlin"
 ```
