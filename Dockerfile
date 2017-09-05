@@ -15,7 +15,7 @@ RUN [ "cross-build-start" ]
 
 # BIND9
 # NEEDED PACKAGES
-RUN apt-get update && apt-get install -y wget gcc make libssl1.0-dev libkrb5-dev
+RUN apt-get update && apt-get install -y wget gcc make build-essential libssl1.0-dev libkrb5-dev
 # DOWNLOAD
 RUN wget -O /tmp/bind-9.11.2.tar.gz ftp://ftp.isc.org/isc/bind/9.11.2/bind-9.11.2.tar.gz && \
     tar -xf /tmp/bind-9.11.2.tar.gz -C /tmp
@@ -35,7 +35,7 @@ COPY /bind/named.conf /usr/local/bind9/etc
 
 # SAMBA
 # NEEDED PACKAGES
-RUN apt-get -y install ntp build-essential libacl1-dev python-dev\
+RUN apt-get -y install ntp libacl1-dev python-dev\
     libldap2-dev pkg-config gdb libgnutls-dev libblkid-dev\
     libreadline-dev libattr1-dev python-dnspython libpopt-dev\
     libbsd-dev attr docbook-xsl libcups2-dev krb5-user git\
