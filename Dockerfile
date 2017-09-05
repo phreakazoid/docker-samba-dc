@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y wget gcc make build-essential libssl1.0
 RUN wget -O /tmp/bind-9.11.2.tar.gz ftp://ftp.isc.org/isc/bind/9.11.2/bind-9.11.2.tar.gz && \
     tar -xf /tmp/bind-9.11.2.tar.gz -C /tmp
 # COMPILE & MAKE
-RUN /tmp/bind-9.11.2/configure --prefix /usr/local/bind9 --enable-shared \
+RUN cd /tmp/bind-9.11.2 && ./configure --prefix /usr/local/bind9 --enable-shared \
                        --enable-static --with-openssl=/usr \ 
                        --with-gssapi=/usr/include/gssapi --with-libtool \
                        --with-dlopen=yes --enable-threads \
@@ -62,4 +62,3 @@ CMD ["/usr/local/bind9/sbin/named"]
 # START SAMBA
 #CMD ["/usr/local/samba/sbin/smbd, "-D", "--option=server role check:inhibit=yes", "--foreground"]
 #CMD ["/usr/local/samba/sbin/winbindd", "-D", "--option=server role check:inhibit=yes", "--foreground"]
-
