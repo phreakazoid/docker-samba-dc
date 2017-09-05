@@ -49,8 +49,6 @@ RUN make install -C /tmp/samba4
 RUN apt-get purge -y gcc* make* 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN [ "cross-build-end" ]
-
 COPY entrypoint.sh /entrypoint.sh
 #RUN chmod +x /entrypoint.sh
 
@@ -65,4 +63,5 @@ ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/local/bind9/sbin/named"]
 # START SAMBA
 #CMD ["/usr/local/samba/sbin/smbd, "-D", "--option=server role check:inhibit=yes", "--foreground"]
+# START WINBIND
 #CMD ["/usr/local/samba/sbin/winbindd", "-D", "--option=server role check:inhibit=yes", "--foreground"]
