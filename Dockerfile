@@ -36,7 +36,7 @@ COPY /bind/named.conf /usr/local/bind9/etc
 # SAMBA
 # NEEDED PACKAGES
 RUN apt-get -y install ntp libacl1-dev python-dev cups\
-    libldap2-dev pkg-config gdb libgnutls-dev libblkid-dev\
+    libldap2-dev pkg-config gdb libgnutls28-dev libblkid-dev\
     libreadline-dev libattr1-dev python-dnspython libpopt-dev\
     libbsd-dev attr docbook-xsl libcups2-dev krb5-user git
     
