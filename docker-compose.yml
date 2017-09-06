@@ -1,0 +1,72 @@
+version: '2.1'
+services:
+
+    dhcp:
+      image: phreakazoid/samba-dc:dhcp
+      build: ./dhcp
+      volumes:
+        - "/etc/localtime:/etc/localtime:ro"
+        - dhcp-vol-1:/etc/dhcpd
+      restart: always
+      environment:
+        - TZ="Europe/Berlin"
+      dns_search: addc-network
+      hostname: dhcp
+      networks:
+        addc-network:
+          ipv4_address: 172.254.1.3
+          aliases:
+            - dhcp
+
+    bind9:
+      image: phreakazoid/samba-dc:bind
+      build: ./bind
+      volumes:
+        - "/etc/localtime:/etc/localtime:ro"
+        - bind9-vol-1:/usr/local/bind9/etc
+      restart: always
+      environment:
+        - TZ="Europe/Berlin"
+      dns_search: addc-network
+      hostname: bind9
+      networks:
+        addc-network:
+          ipv4_address: 172.254.1.2
+          aliases:
+            - bind9
+
+    samba:
+      image: phreakazoid/samba-dc:samba
+      build: ./samba
+      volumes:
+        - "/etc/localtime:/etc/localtime:ro"
+        - samba-etc-vol-1:/usr/local/samba/etc
+        - samba-private-vol-1:/usr/local/samba/private
+        - samba-var-vol-1:/usr/local/samba/var
+      restart: always
+      environment:
+        - TZ="Europe/Berlin"
+      dns_search: addc-network
+      hostname: samba
+      networks:
+        addc-network:
+          ipv4_address: 172.254.1.1
+          aliases:
+            - samba
+
+networks:
+  addc-network:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.254.1.0/24
+        - subnet: fd4d:6169:6c63:6f77::/64
+
+volumes:
+  dhcp-vol-1:
+  bind9-vol-1:
+  samba-etc-vol-1:
+  samba-private-vol-1:
+  samba-var-vol-1:
