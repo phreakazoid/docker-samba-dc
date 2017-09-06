@@ -40,7 +40,7 @@ RUN apt-get -y install ntp libacl1-dev python-dev cups\
     libreadline-dev libattr1-dev python-dnspython libpopt-dev\
     libbsd-dev attr docbook-xsl libcups2-dev krb5-user git
     
-RUN git clone git://git.samba.org/samba.git /tmp/samba4/ && cd /tmp/samba4 && git checkout tags/samba-4.7.0rc5
+RUN git clone https://github.com/samba-team/samba.git /tmp/samba4/ && cd /tmp/samba4 && git checkout tags/samba-4.7.0rc5
 RUN cd /tmp/samba4 && ./configure --enable-debug
 RUN make -C /tmp/samba4
 RUN make install -C /tmp/samba4
