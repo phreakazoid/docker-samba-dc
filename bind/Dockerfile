@@ -26,9 +26,12 @@ RUN cd /tmp/bind-9.11.2 && ./configure --prefix /usr/local/bind9 --enable-shared
                        --enable-largefile --with-gnu-ld --enable-ipv6 \
                        CFLAGS=-fno-strict-aliasing CFLAGS=-DDIG_SIGCHASE \
                        CFLAGS=-O2
-RUN make -C /tmp/bind-9.11.2
-RUN make install -C /tmp/bind-9.11.2
-RUN sed 's#^\(export PATH\)$#PATH="/usr/local/bind9/sbin:/usr/local/bind9/bin:$PATH"\n\1#' /etc/profile
+# RUN make -C /tmp/bind-9.11.2
+# RUN make install -C /tmp/bind-9.11.2
+RUN cd /tmp/bind-9.11.2 && make
+RUN cd /tmp/bind-9.11.2 && make install
+
+#RUN sed 's#^\(export PATH\)$#PATH="/usr/local/bind9/sbin:/usr/local/bind9/bin:$PATH"\n\1#' /etc/profile
 # COPY NAMED.CONF
 COPY named.conf /usr/local/bind9/etc
 
